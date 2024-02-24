@@ -15,6 +15,7 @@
 	<description>Cover letter generator with AI</description>
 	<properties>
 		<java.version>21</java.version>
+		<webmagic.version>0.10.0</webmagic.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -26,6 +27,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+<!--		WebMagic - WebScrapping-->
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-core</artifactId>
+			<version>${webmagic.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-extension</artifactId>
+			<version>${webmagic.version}</version>
 		</dependency>
 	</dependencies>
 
