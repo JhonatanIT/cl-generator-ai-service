@@ -3,7 +3,7 @@ langchain4j:
     chat-model:
       api-key: demo
       model-name: gpt-3.5-turbo
-      temperature: 0.0
+      temperature: 1.0
       timeout: PT60S
       log-requests: true
       log-responses: true

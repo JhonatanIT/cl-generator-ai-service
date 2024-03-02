@@ -1,6 +1,9 @@
 package com.jibanez.clgeneratoraiservice.controller;
 
-import com.jibanez.clgeneratoraiservice.util.AiDemoService;
+import com.jibanez.clgeneratoraiservice.prompt.CoverLetterSimplePrompt;
+import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -16,16 +19,30 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class CoverLetterController {
 
-    private AiDemoService aiDemoService;
+    private CoverLetterAiService coverLetterAiService;
 
     @GetMapping
-    public ResponseEntity<String> getMessage(@RequestParam String prompt) {
+    public ResponseEntity<String> generateSimpleCoverLetter(@RequestParam String companyName, @RequestParam String jobPosition) {
 
-        log.info("Prompt received: {}", prompt);
-        String agentMessage = aiDemoService.chat(prompt);
-        log.info("Message generated: {}", agentMessage);
+        //TODO receive a URL of a job and apply web scrapping to obtain details about the job
 
-        return new ResponseEntity<>(agentMessage, HttpStatus.OK);
+        log.info("Generate cover letter for: {} - {}", companyName, jobPosition);
+
+        CoverLetterSimplePrompt coverLetterSimplePrompt = new CoverLetterSimplePrompt();
+        coverLetterSimplePrompt.setCompanyName(companyName);
+        coverLetterSimplePrompt.setJobPosition(jobPosition);
+
+        Prompt prompt = StructuredPromptProcessor.toPrompt(coverLetterSimplePrompt);
+
+        //Using only Prompt without AiService
+//        AiMessage aiMessage = chatLanguageModel.generate(prompt.toUserMessage()).content();
+//        log.info("Message generated: {}", aiMessage.text());
+//        return new ResponseEntity<>(aiMessage.text(), HttpStatus.OK);
+
+        //TODO use the AiService
+        String coverLetterTextGenerated = coverLetterAiService.generate(prompt);
+        log.info("Message generated: {}", coverLetterTextGenerated);
+        return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
     }
 
 }

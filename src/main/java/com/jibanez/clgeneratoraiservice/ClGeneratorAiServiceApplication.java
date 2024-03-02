@@ -1,5 +1,6 @@
 package com.jibanez.clgeneratoraiservice;
 
+import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
 import com.jibanez.clgeneratoraiservice.util.AiDemoService;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
@@ -33,10 +34,22 @@ public class ClGeneratorAiServiceApplication {
         SpringApplication.run(ClGeneratorAiServiceApplication.class, args);
     }
     @Bean
-    AiDemoService customerSupportAgent(ChatLanguageModel chatLanguageModel,
+    AiDemoService aiDemoService(ChatLanguageModel chatLanguageModel,
 //                                              BookingTools bookingTools,
                                        ContentRetriever contentRetriever) {
         return AiServices.builder(AiDemoService.class)
+                .chatLanguageModel(chatLanguageModel)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
+//                .tools(bookingTools)
+                .contentRetriever(contentRetriever)
+                .build();
+    }
+
+    @Bean
+    CoverLetterAiService coverLetterAiService(ChatLanguageModel chatLanguageModel,
+//                                              BookingTools bookingTools,
+                                              ContentRetriever contentRetriever) {
+        return AiServices.builder(CoverLetterAiService.class)
                 .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
 //                .tools(bookingTools)
@@ -76,8 +89,8 @@ public class ClGeneratorAiServiceApplication {
         // 1. Create an in-memory embedding store
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
-        // 2. Load an example document ("Miles of Smiles" terms of use)
-        Resource resource = resourceLoader.getResource("classpath:miles-of-smiles-terms-of-use.txt");
+        // 2. Load a document with user data
+        Resource resource = resourceLoader.getResource("classpath:user-data.txt");
         Document document = loadDocument(resource.getFile().toPath(), new TextDocumentParser());
 
         // 3. Split the document into segments 100 tokens each
