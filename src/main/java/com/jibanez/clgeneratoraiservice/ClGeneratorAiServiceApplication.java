@@ -10,14 +10,12 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
-import dev.langchain4j.model.openai.OpenAiTokenizer;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +23,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
@@ -33,31 +30,8 @@ import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.load
 public class ClGeneratorAiServiceApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(ClGeneratorAiServiceApplication.class, args);
     }
-
-    @Bean
-    ApplicationRunner interactiveChatRunner(AiDemoService agent) {
-        return args -> {
-            Scanner scanner = new Scanner(System.in);
-
-            while (true) {
-                System.out.print("User: ");
-                String userMessage = scanner.nextLine();
-
-                if ("exit".equalsIgnoreCase(userMessage)) {
-                    break;
-                }
-
-                String agentMessage = agent.chat(userMessage);
-                System.out.println("Agent: " + agentMessage);
-            }
-
-            scanner.close();
-        };
-    }
-
     @Bean
     AiDemoService customerSupportAgent(ChatLanguageModel chatLanguageModel,
 //                                              BookingTools bookingTools,
