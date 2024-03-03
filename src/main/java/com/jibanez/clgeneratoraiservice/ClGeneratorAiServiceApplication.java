@@ -63,7 +63,7 @@ public class ClGeneratorAiServiceApplication {
         // You will need to adjust these parameters to find the optimal setting, which will depend on two main factors:
         // - The nature of your data
         // - The embedding model you are using
-        int maxResults = 1;
+        int maxResults = 5;
         double minScore = 0.6;
 
         return EmbeddingStoreContentRetriever.builder()
@@ -93,11 +93,11 @@ public class ClGeneratorAiServiceApplication {
         Resource resource = resourceLoader.getResource("classpath:user-data.txt");
         Document document = loadDocument(resource.getFile().toPath(), new TextDocumentParser());
 
-        // 3. Split the document into segments 100 tokens each
+        // 3. Split the document into segments 300 tokens each
         // 4. Convert segments into embeddings
         // 5. Store embeddings into embedding store
         // All this can be done manually, but we will use EmbeddingStoreIngestor to automate this:
-        DocumentSplitter documentSplitter = DocumentSplitters.recursive(100, 0);
+        DocumentSplitter documentSplitter = DocumentSplitters.recursive(300, 0);
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
                 .documentSplitter(documentSplitter)
                 .embeddingModel(embeddingModel)

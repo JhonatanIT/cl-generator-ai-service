@@ -1,41 +1,8 @@
-You MUST use the following data of the job applicant to create a cover letter:
-- Name: Armando Paredes
-- Email address: armando.paredes@gmail.com
-- Phone Number: +51 123456789
-- City: Lima
-- State: Lima
-- Postal Code: 15000
-- LinkedIn username: armandoparedes
-- Professional summary: Software Engineer with 4 years of experience in analysis, design and implementation of enterprise systems in the banking and telecommunications sectors. I feel passionate about working in teams that seek the common good and their professional growth. I am a committed IT professional who is always at the forefront of new technologies.
-- Personal key values and strengths:[
-    Analytic thinking,
-    Quick learning,
-    Responsible,
-    Teamwork,
-    Problem solving
-]
-- I am looking for a company that:[
-    offer sponsorship,
-    have great cultural values,
-    have professional career
-]
-- Experience or relevant projects: [
-    {
-        name: ABC Bank,
-        description: I together with the team created a customer loyalty module through a system of notifications, rewards and discounts so that the customers of this bank feel secure and prefer to use our system instead of that of the competition, creating added value for our customers
-    }
-]
-- Skills: [
-        {
-            name: java,
-            experience: 4 years
-        },
-        {
-            name: angular,
-            experience: 4 years
-        },
-        {
-            name: docker,
-            experience: 4 years
-        }
-]
+You MUST use the data of the following job applicant to create a cover letter:
+I am a job applicant, my name is Armando Armas, my email address is armando.armas@gmail.com and my phone number is +51 123480999.
+I live in the city of Melbourne, state of VIC and postal code 3000 in Australia.
+I am Software Engineer with 4 years of experience in analysis, design and implementation of enterprise systems in the banking and telecommunications sectors. I feel passionate about working in teams that seek the common good and their professional growth. I am a committed IT professional who is always at the forefront of new technologies.
+My personal key values and strengths are: analytic thinking, quick learning, responsible, teamwork and problem-solving
+I am looking for a company that has great cultural values and has professional career
+I have experience in the relevant projects: For the ABC Bank, I together with the team created a customer loyalty module through a system of notifications, rewards and discounts so that the customers of this bank feel secure and prefer to use our system instead of that of the competition, creating added value for our customers
+My skills are java with 4 years of experience, angular with 4 years of experience and docker with 4 years of experience.

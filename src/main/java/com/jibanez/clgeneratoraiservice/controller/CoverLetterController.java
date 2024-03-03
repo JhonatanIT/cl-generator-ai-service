@@ -25,6 +25,7 @@ public class CoverLetterController {
     public ResponseEntity<String> generateSimpleCoverLetter(@RequestParam String companyName, @RequestParam String jobPosition) {
 
         //TODO receive a URL of a job and apply web scrapping to obtain details about the job
+        //TODO use the advanced prompt (include the currently date)
 
         log.info("Generate cover letter for: {} - {}", companyName, jobPosition);
 
@@ -39,8 +40,7 @@ public class CoverLetterController {
 //        log.info("Message generated: {}", aiMessage.text());
 //        return new ResponseEntity<>(aiMessage.text(), HttpStatus.OK);
 
-        //TODO use the AiService
-        String coverLetterTextGenerated = coverLetterAiService.generate(prompt);
+        String coverLetterTextGenerated = coverLetterAiService.generate(prompt.text());
         log.info("Message generated: {}", coverLetterTextGenerated);
         return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
     }
