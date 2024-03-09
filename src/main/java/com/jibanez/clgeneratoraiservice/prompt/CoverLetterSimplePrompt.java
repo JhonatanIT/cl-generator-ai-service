@@ -11,6 +11,7 @@ import lombok.Setter;
         "Create a professional cover letter with the following details:",
         "job position: {{jobPosition}}",
         "company name: {{companyName}}",
+        "current date: {{currentDate}}",
 })
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class CoverLetterSimplePrompt {
 
     private String jobPosition;
     private String companyName;
+    private String currentDate;
 }

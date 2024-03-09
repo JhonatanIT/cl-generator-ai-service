@@ -1,9 +1,9 @@
 package com.jibanez.clgeneratoraiservice.controller;
 
-import com.jibanez.clgeneratoraiservice.prompt.CoverLetterSimplePrompt;
 import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
-import dev.langchain4j.model.input.Prompt;
-import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
+import com.jibanez.clgeneratoraiservice.service.PromptService;
+import com.jibanez.clgeneratoraiservice.service.WebScrappingService;
+import com.jibanez.clgeneratoraiservice.util.JSoupWebScraperExample;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -20,29 +20,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class CoverLetterController {
 
     private CoverLetterAiService coverLetterAiService;
+    private WebScrappingService webScrappingService;
+    private PromptService promptService;
 
     @GetMapping
-    public ResponseEntity<String> generateSimpleCoverLetter(@RequestParam String companyName, @RequestParam String jobPosition) {
+    public ResponseEntity<String> generateSimpleCoverLetter(
+            @RequestParam String companyName,
+            @RequestParam String jobPosition,
+            @RequestParam String jobLink) {
 
         //TODO receive a URL of a job and apply web scrapping to obtain details about the job
-        //TODO use the advanced prompt (include the currently date)
+        //TODO use the advanced prompt
 
         log.info("Generate cover letter for: {} - {}", companyName, jobPosition);
+        String coverLetterTextGenerated = coverLetterAiService.generate(promptService.generateSimplePrompt(companyName, jobPosition));
+        log.info("Message generated: {}", coverLetterTextGenerated);
 
-        CoverLetterSimplePrompt coverLetterSimplePrompt = new CoverLetterSimplePrompt();
-        coverLetterSimplePrompt.setCompanyName(companyName);
-        coverLetterSimplePrompt.setJobPosition(jobPosition);
+//        webScrappingService.getFullTextFromURL(jobLink);
+        JSoupWebScraperExample.getFullTextFromHtmlFile();
 
-        Prompt prompt = StructuredPromptProcessor.toPrompt(coverLetterSimplePrompt);
+        return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
 
         //Using only Prompt without AiService
 //        AiMessage aiMessage = chatLanguageModel.generate(prompt.toUserMessage()).content();
 //        log.info("Message generated: {}", aiMessage.text());
 //        return new ResponseEntity<>(aiMessage.text(), HttpStatus.OK);
-
-        String coverLetterTextGenerated = coverLetterAiService.generate(prompt.text());
-        log.info("Message generated: {}", coverLetterTextGenerated);
-        return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
     }
 
 }
