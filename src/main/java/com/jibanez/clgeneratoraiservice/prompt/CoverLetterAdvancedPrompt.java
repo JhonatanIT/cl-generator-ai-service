@@ -2,16 +2,12 @@ package com.jibanez.clgeneratoraiservice.prompt;
 
 
 import dev.langchain4j.model.input.structured.StructuredPrompt;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @StructuredPrompt({
         "Create a professional cover letter with the following details:",
-        "job id reference: {{jobIdReference}}",
         "job position: {{jobPosition}}",
         "job description: {{jobDescription}}",
         "job location: {{jobLocation}}",
@@ -23,14 +19,15 @@ import java.util.List;
         "company state: {{companyState}}",
         "company country: {{companyCountry}}",
         "Hiring Manager's Name: {{hiringManagerName}}",
+        "current date: {{currentDate}}",
 })
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class CoverLetterAdvancedPrompt {
 
-    private String jobIdReference;
     private String jobPosition;
     private String jobDescription;
     private String jobLocation;
@@ -42,4 +39,5 @@ public class CoverLetterAdvancedPrompt {
     private String companyState;
     private String companyCountry;
     private String hiringManagerName;
+    private String currentDate;
 }

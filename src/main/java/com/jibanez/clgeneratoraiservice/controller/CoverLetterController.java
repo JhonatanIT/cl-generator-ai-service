@@ -2,8 +2,6 @@ package com.jibanez.clgeneratoraiservice.controller;
 
 import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
 import com.jibanez.clgeneratoraiservice.service.PromptService;
-import com.jibanez.clgeneratoraiservice.service.WebScrappingService;
-import com.jibanez.clgeneratoraiservice.util.JSoupWebScraperExample;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -20,24 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CoverLetterController {
 
     private CoverLetterAiService coverLetterAiService;
-    private WebScrappingService webScrappingService;
     private PromptService promptService;
 
     @GetMapping
     public ResponseEntity<String> generateSimpleCoverLetter(
             @RequestParam String companyName,
-            @RequestParam String jobPosition,
-            @RequestParam String jobLink) {
-
-        //TODO receive a URL of a job and apply web scrapping to obtain details about the job
-        //TODO use the advanced prompt
+            @RequestParam String jobPosition) {
 
         log.info("Generate cover letter for: {} - {}", companyName, jobPosition);
         String coverLetterTextGenerated = coverLetterAiService.generate(promptService.generateSimplePrompt(companyName, jobPosition));
         log.info("Message generated: {}", coverLetterTextGenerated);
-
-//        webScrappingService.getFullTextFromURL(jobLink);
-        JSoupWebScraperExample.getFullTextFromHtmlFile();
 
         return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
 
@@ -47,4 +37,13 @@ public class CoverLetterController {
 //        return new ResponseEntity<>(aiMessage.text(), HttpStatus.OK);
     }
 
+    @GetMapping("/web-scraped")
+    public ResponseEntity<String> generateFrom(@RequestParam String jobLink) {
+
+        log.info("Generate cover letter from job link: {}", jobLink);
+        String coverLetterTextGenerated = coverLetterAiService.generate(promptService.generateAdvancedPrompt(jobLink));
+        log.info("Message generated: {}", coverLetterTextGenerated);
+
+        return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
+    }
 }

@@ -1,6 +1,7 @@
 package com.jibanez.clgeneratoraiservice;
 
 import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
+import com.jibanez.clgeneratoraiservice.service.JobDetailsExtractorAiService;
 import com.jibanez.clgeneratoraiservice.util.AiDemoService;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
@@ -33,10 +34,11 @@ public class ClGeneratorAiServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ClGeneratorAiServiceApplication.class, args);
     }
+
     @Bean
     AiDemoService aiDemoService(ChatLanguageModel chatLanguageModel,
 //                                              BookingTools bookingTools,
-                                       ContentRetriever contentRetriever) {
+                                ContentRetriever contentRetriever) {
         return AiServices.builder(AiDemoService.class)
                 .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
@@ -58,12 +60,19 @@ public class ClGeneratorAiServiceApplication {
     }
 
     @Bean
+    JobDetailsExtractorAiService jobDetailsExtractorAiService(ChatLanguageModel chatLanguageModel) {
+        return AiServices.builder(JobDetailsExtractorAiService.class)
+                .chatLanguageModel(chatLanguageModel)
+                .build();
+    }
+
+    @Bean
     ContentRetriever contentRetriever(EmbeddingStore<TextSegment> embeddingStore, EmbeddingModel embeddingModel) {
 
         // You will need to adjust these parameters to find the optimal setting, which will depend on two main factors:
         // - The nature of your data
         // - The embedding model you are using
-        int maxResults = 5;
+        int maxResults = 10;
         double minScore = 0.6;
 
         return EmbeddingStoreContentRetriever.builder()
