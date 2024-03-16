@@ -9,7 +9,8 @@ public interface CoverLetterAiService {
             "Your job is to generate the most impressive cover letter adapted to the company and the position that someone is going to apply",
             "Your objective is to catch the attention of the interviewer and get an interview",
             "Just generate the content of the cover letter, don't include personal comments at the end",
-            "Don't include placeholder values that contains square brackets: []"
+//            "Explain in the cover letter why the job candidate and the company are align in the skills, opportunities and improvements of each other"
+//            "Don't include placeholder values that contains square brackets: []"
     })
     String generate(String prompt);
 }

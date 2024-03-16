@@ -18,6 +18,7 @@
 		<jsoup.version>1.17.2</jsoup.version>
 		<htmlunit.version>2.70.0</htmlunit.version>
 		<langchain4j.version>0.28.0</langchain4j.version>
+		<pdfbox.version>2.0.30</pdfbox.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,6 +69,13 @@
 			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
 			<version>${langchain4j.version}</version>
+		</dependency>
+
+<!--		PDF generator-->
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>${pdfbox.version}</version>
 		</dependency>
 
 	</dependencies>

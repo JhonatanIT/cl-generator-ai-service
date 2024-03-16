@@ -2,6 +2,7 @@ package com.jibanez.clgeneratoraiservice.controller;
 
 import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
 import com.jibanez.clgeneratoraiservice.service.PromptService;
+import com.jibanez.clgeneratoraiservice.util.GeneratePDFBoxExample;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,8 @@ public class CoverLetterController {
         String coverLetterTextGenerated = coverLetterAiService.generate(promptService.generateSimplePrompt(companyName, jobPosition));
         log.info("Message generated: {}", coverLetterTextGenerated);
 
+        GeneratePDFBoxExample.generatePDF(coverLetterTextGenerated, "Cover Letter");
+
         return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
 
         //Using only Prompt without AiService
@@ -43,6 +46,8 @@ public class CoverLetterController {
         log.info("Generate cover letter from job link: {}", jobLink);
         String coverLetterTextGenerated = coverLetterAiService.generate(promptService.generateAdvancedPrompt(jobLink));
         log.info("Message generated: {}", coverLetterTextGenerated);
+
+        GeneratePDFBoxExample.generatePDF(coverLetterTextGenerated, "Cover Letter");
 
         return new ResponseEntity<>(coverLetterTextGenerated, HttpStatus.OK);
     }
