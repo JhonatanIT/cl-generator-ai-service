@@ -23,13 +23,13 @@ public class JSoupWebScraperExample {
 
     public static void main(String[] args) {
 
-        log.info("EXAMPLE WITH URL: ");
-        getFullTextFromURL("https://example.com/");
-
-        log.info("EXAMPLE FROM HTML FILE: ");
-        getFullTextFromHtmlFile();
-
-        log.info("EXAMPLE FROM SEEK JOB: ");
+//        log.info("EXAMPLE WITH URL: ");
+//        getFullTextFromURL("https://example.com/");
+//
+//        log.info("EXAMPLE FROM HTML FILE: ");
+//        getFullTextFromHtmlFile();
+//
+//        log.info("EXAMPLE FROM SEEK JOB: ");
         fromSeek();
     }
 
@@ -83,7 +83,7 @@ public class JSoupWebScraperExample {
     public static void fromSeek() {
 
         try {
-            Document document = Jsoup.connect("https://www.seek.com.au/job/74223160").get();
+            Document document = Jsoup.connect("https://www.seek.com.au/job/74482612").get();
 
 //            Elements content = document.select("[data-automation]");
 //            content.forEach(x -> log.info(x.text()));
@@ -117,10 +117,13 @@ public class JSoupWebScraperExample {
 
                     companyAddress = documentLocation.select("div .sXLaOe")
                             .stream().findFirst().map(Element::text).orElse("[Job Location]");
-                    companyPostalCode = companyAddress.split(" ")[companyAddress.split(" ").length - 1];
-                    companyState = companyAddress.split(" ")[companyAddress.split(" ").length - 2];
-                    companyCity = companyAddress.split(" ")[companyAddress.split(" ").length - 3];
-                    companyAddress = companyAddress.split(",")[0];
+
+                    if (!"[Job Location]".equals(companyAddress)) {
+                        companyPostalCode = companyAddress.split(" ")[companyAddress.split(" ").length - 1];
+                        companyState = companyAddress.split(" ")[companyAddress.split(" ").length - 2];
+                        companyCity = companyAddress.split(" ")[companyAddress.split(" ").length - 3];
+                        companyAddress = companyAddress.split(",")[0];
+                    }
                 }
             }
 

@@ -54,10 +54,12 @@ public class WebScrappingService {
 
                     companyAddress = documentLocation.select("div .sXLaOe")
                             .stream().findFirst().map(Element::text).orElse("[Job Location]");
-                    companyPostalCode = companyAddress.split(" ")[companyAddress.split(" ").length - 1];
-                    companyState = companyAddress.split(" ")[companyAddress.split(" ").length - 2];
-                    companyCity = companyAddress.split(" ")[companyAddress.split(" ").length - 3];
-                    companyAddress = companyAddress.split(",")[0];
+                    if (!"[Job Location]".equals(companyAddress)) {
+                        companyPostalCode = companyAddress.split(" ")[companyAddress.split(" ").length - 1];
+                        companyState = companyAddress.split(" ")[companyAddress.split(" ").length - 2];
+                        companyCity = companyAddress.split(" ")[companyAddress.split(" ").length - 3];
+                        companyAddress = companyAddress.split(",")[0];
+                    }
                 }
 
             }
