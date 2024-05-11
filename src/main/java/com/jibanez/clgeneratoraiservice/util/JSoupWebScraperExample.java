@@ -83,7 +83,7 @@ public class JSoupWebScraperExample {
     public static void fromSeek() {
 
         try {
-            Document document = Jsoup.connect("https://www.seek.com.au/job/74482612").get();
+            Document document = Jsoup.connect("https://www.seek.com.au/job/75717176").get();
 
 //            Elements content = document.select("[data-automation]");
 //            content.forEach(x -> log.info(x.text()));
@@ -104,7 +104,8 @@ public class JSoupWebScraperExample {
                     .stream().findFirst().map(Element::text).orElse("[Company Name]");
 
             //:not(:has(*)) -> CSS selector when don't have children
-            String jobLocation = document.select("._1iz8dgs6u span.y735df0._1iz8dgs4y._1iz8dgsr:not(:has(*))")
+//            String jobLocation = document.select("._1iz8dgs6u span.y735df0._1iz8dgs4y._1iz8dgsr:not(:has(*))")
+            String jobLocation = document.select("[data-automation=\"job-detail-location\"]")
                     .stream().findFirst().map(Element::text).orElse("[Job Location]");
 
             if (!"[Job Location]".equals(jobLocation)) {

@@ -41,7 +41,8 @@ public class WebScrappingService {
                     .stream().findFirst().map(Element::text).orElse("[Company Name]");
 
             //:not(:has(*)) -> CSS selector when don't have children
-            String jobLocation = document.select("._1iz8dgs6u span.y735df0._1iz8dgs4y._1iz8dgsr:not(:has(*))")
+//            String jobLocation = document.select("._1iz8dgs6u span.y735df0._1iz8dgs4y._1iz8dgsr:not(:has(*))")
+            String jobLocation = document.select("[data-automation=\"job-detail-location\"]")
                     .stream().findFirst().map(Element::text).orElse("[Job Location]");
 
             if (!"[Job Location]".equals(jobLocation)) {
