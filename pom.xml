@@ -18,7 +18,7 @@
 		<jsoup.version>1.17.2</jsoup.version>
 		<htmlunit.version>2.70.0</htmlunit.version>
 		<langchain4j.version>0.31.0</langchain4j.version>
-		<pdfbox.version>2.0.31</pdfbox.version>
+		<pdfbox.version>3.0.2</pdfbox.version>
 	</properties>
 	<dependencies>
 		<dependency>
