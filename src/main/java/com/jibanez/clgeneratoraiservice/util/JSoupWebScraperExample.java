@@ -83,7 +83,9 @@ public class JSoupWebScraperExample {
     public static void fromSeek() {
 
         try {
-            Document document = Jsoup.connect("https://www.seek.com.au/job/75717176").get();
+            Document document = Jsoup.connect("https://www.seek.co.nz/job/76274648")
+                    .userAgent("Mozilla")
+                    .get();
 
 //            Elements content = document.select("[data-automation]");
 //            content.forEach(x -> log.info(x.text()));
@@ -94,7 +96,7 @@ public class JSoupWebScraperExample {
             String companyPostalCode = "[Company Postal Code]";
             String companyCity = "[Company City]";
             String companyState = "[Company State]";
-            String companyCountry = "Australia";
+            String companyCountry = "New Zealand";   //"Australia"
 
             String hiringManagerName = "Hiring Manager";
 
@@ -109,12 +111,19 @@ public class JSoupWebScraperExample {
                     .stream().findFirst().map(Element::text).orElse("[Job Location]");
 
             if (!"[Job Location]".equals(jobLocation)) {
-                companyCity = jobLocation.split(" ")[0];
-                companyState = jobLocation.split(" ")[1];
+
+                if (jobLocation.contains(",")) {
+                    String[] jobLocationSplit = jobLocation.split(",");
+                    companyCity = jobLocationSplit[0].trim();
+                    companyState = jobLocationSplit[jobLocationSplit.length - 1].trim();
+                } else {
+                    companyCity = jobLocation.split(" ")[0];
+                    companyState = jobLocation.split(" ")[1];
+                }
 
                 if (!"[Company Name]".equals(companyName)) {
                     //Call google to obtain location address of the company
-                    Document documentLocation = Jsoup.connect("https://www.google.com/search?q=location of ".concat(companyName)).get();
+                    Document documentLocation = Jsoup.connect("https://www.google.com/search?q=location of ".concat(companyName)).userAgent("Mozilla").get();
 
                     companyAddress = documentLocation.select("div .sXLaOe")
                             .stream().findFirst().map(Element::text).orElse("[Job Location]");

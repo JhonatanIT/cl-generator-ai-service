@@ -20,7 +20,7 @@ public class WebScrappingService {
 
     public CoverLetterAdvancedPrompt getCoverLetterAdvancedPromptFromURL(String url) {
         try {
-            Document document = Jsoup.connect(url).get();
+            Document document = Jsoup.connect(url).userAgent("Mozilla").get();
 
             //TODO try if it is possible to obtain the hiringManagerName
             //TODO evaluate jobDescription to obtain more precise data (try to obtain more data like job benefits, company value)
@@ -31,7 +31,8 @@ public class WebScrappingService {
             String companyPostalCode = "[Company Postal Code]";
             String companyCity = "[Company City]";
             String companyState = "[Company State]";
-            String companyCountry = "Australia";
+            //TODO generate an endpoint multi-nation AU and NZ
+            String companyCountry = "New Zealand";   //"Australia"
 
             String hiringManagerName = "Hiring Manager";
 
@@ -46,12 +47,18 @@ public class WebScrappingService {
                     .stream().findFirst().map(Element::text).orElse("[Job Location]");
 
             if (!"[Job Location]".equals(jobLocation)) {
-                companyCity = jobLocation.split(" ")[0];
-                companyState = jobLocation.split(" ")[1];
+                if (jobLocation.contains(",")) {
+                    String[] jobLocationSplit = jobLocation.split(",");
+                    companyCity = jobLocationSplit[0].trim();
+                    companyState = jobLocationSplit[jobLocationSplit.length - 1].trim();
+                } else {
+                    companyCity = jobLocation.split(" ")[0];
+                    companyState = jobLocation.split(" ")[1];
+                }
 
                 if (!"[Company Name]".equals(companyName)) {
                     //Call google to obtain location address of the company
-                    Document documentLocation = Jsoup.connect("https://www.google.com/search?q=location of ".concat(companyName)).get();
+                    Document documentLocation = Jsoup.connect("https://www.google.com/search?q=location of ".concat(companyName)).userAgent("Mozilla").get();
 
                     companyAddress = documentLocation.select("div .sXLaOe")
                             .stream().findFirst().map(Element::text).orElse("[Job Location]");
