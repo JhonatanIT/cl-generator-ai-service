@@ -10,7 +10,7 @@ import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
+import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
@@ -72,7 +72,7 @@ public class ClGeneratorAiServiceApplication {
         // You will need to adjust these parameters to find the optimal setting, which will depend on two main factors:
         // - The nature of your data
         // - The embedding model you are using
-        int maxResults = 10;
+        int maxResults = 12;
         double minScore = 0.6;
 
         return EmbeddingStoreContentRetriever.builder()
