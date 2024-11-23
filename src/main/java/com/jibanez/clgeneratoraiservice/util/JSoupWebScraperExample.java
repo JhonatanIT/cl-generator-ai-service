@@ -96,7 +96,7 @@ public class JSoupWebScraperExample {
             String companyPostalCode = "[Company Postal Code]";
             String companyCity = "[Company City]";
             String companyState = "[Company State]";
-            String companyCountry = "New Zealand";   //"Australia"
+            String companyCountry = "Australia";   //"New Zealand"
 
             String hiringManagerName = "Hiring Manager";
 
@@ -142,7 +142,7 @@ public class JSoupWebScraperExample {
 
             if (!"[Job Description]".equals(jobDescription)) {
 
-                ChatLanguageModel chatLanguageModel = OpenAiChatModel.withApiKey("demo");
+                ChatLanguageModel chatLanguageModel = OpenAiChatModel.builder().apiKey("demo").build();
                 JobDetailsExtractorAiService jobDetailsExtractorAiService = AiServices.create(JobDetailsExtractorAiService.class, chatLanguageModel);
 
                 //Call jobDetailsExtractorAiService to obtain more data through jobDescription
@@ -164,7 +164,7 @@ public class JSoupWebScraperExample {
             coverLetterAdvancedPrompt.setHiringManagerName(hiringManagerName);
             coverLetterAdvancedPrompt.setCurrentDate(LocalDate.now().toString());
 
-            System.out.println(coverLetterAdvancedPrompt);
+            log.info(coverLetterAdvancedPrompt);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

@@ -32,19 +32,16 @@ public class WebScrappingService {
             String companyCity = "[Company City]";
             String companyState = "[Company State]";
             //TODO generate an endpoint multi-nation AU and NZ
-            String companyCountry = "New Zealand";   //"Australia"
+            String companyCountry = "Australia";   //"New Zealand"
 
             String hiringManagerName = "Hiring Manager";
 
-            String jobPosition = document.select("[data-automation=\"job-detail-title\"]")
-                    .stream().findFirst().map(Element::text).orElse("[Job Position]");
-            String companyName = document.select("[data-automation=\"advertiser-name\"]")
-                    .stream().findFirst().map(Element::text).orElse("[Company Name]");
+            String jobPosition = document.select("[data-automation=\"job-detail-title\"]").stream().findFirst().map(Element::text).orElse("[Job Position]");
+            String companyName = document.select("[data-automation=\"advertiser-name\"]").stream().findFirst().map(Element::text).orElse("[Company Name]");
 
             //:not(:has(*)) -> CSS selector when don't have children
 //            String jobLocation = document.select("._1iz8dgs6u span.y735df0._1iz8dgs4y._1iz8dgsr:not(:has(*))")
-            String jobLocation = document.select("[data-automation=\"job-detail-location\"]")
-                    .stream().findFirst().map(Element::text).orElse("[Job Location]");
+            String jobLocation = document.select("[data-automation=\"job-detail-location\"]").stream().findFirst().map(Element::text).orElse("[Job Location]");
 
             if (!"[Job Location]".equals(jobLocation)) {
                 if (jobLocation.contains(",")) {
@@ -60,8 +57,7 @@ public class WebScrappingService {
                     //Call google to obtain location address of the company
                     Document documentLocation = Jsoup.connect("https://www.google.com/search?q=location of ".concat(companyName)).userAgent("Mozilla").get();
 
-                    companyAddress = documentLocation.select("div .sXLaOe")
-                            .stream().findFirst().map(Element::text).orElse("[Job Location]");
+                    companyAddress = documentLocation.select("div .sXLaOe").stream().findFirst().map(Element::text).orElse("[Job Location]");
                     if (!"[Job Location]".equals(companyAddress)) {
                         companyPostalCode = companyAddress.split(" ")[companyAddress.split(" ").length - 1];
                         companyState = companyAddress.split(" ")[companyAddress.split(" ").length - 2];
@@ -72,8 +68,7 @@ public class WebScrappingService {
 
             }
 
-            String jobDescription = document.select("[data-automation=\"jobAdDetails\"]")
-                    .stream().findFirst().map(Element::text).orElse("[Job Description]");
+            String jobDescription = document.select("[data-automation=\"jobAdDetails\"]").stream().findFirst().map(Element::text).orElse("[Job Description]");
 
             if (!"[Job Description]".equals(jobDescription)) {
                 //Call jobDetailsExtractorAiService to obtain more data through jobDescription

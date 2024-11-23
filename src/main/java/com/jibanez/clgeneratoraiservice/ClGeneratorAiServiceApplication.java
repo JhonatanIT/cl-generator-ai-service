@@ -1,8 +1,9 @@
 package com.jibanez.clgeneratoraiservice;
 
+import com.jibanez.clgeneratoraiservice.controller.CoverLetterController;
+import com.jibanez.clgeneratoraiservice.controller.HelloController;
 import com.jibanez.clgeneratoraiservice.service.CoverLetterAiService;
 import com.jibanez.clgeneratoraiservice.service.JobDetailsExtractorAiService;
-import com.jibanez.clgeneratoraiservice.util.AiDemoService;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.parser.TextDocumentParser;
@@ -10,8 +11,8 @@ import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
@@ -21,6 +22,7 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
@@ -29,22 +31,13 @@ import java.io.IOException;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 @SpringBootApplication
+// We use direct @Import instead of @ComponentScan to speed up cold starts
+// @ComponentScan(basePackages = "org.example.controller")
+@Import({CoverLetterController.class, HelloController.class})
 public class ClGeneratorAiServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ClGeneratorAiServiceApplication.class, args);
-    }
-
-    @Bean
-    AiDemoService aiDemoService(ChatLanguageModel chatLanguageModel,
-//                                              BookingTools bookingTools,
-                                ContentRetriever contentRetriever) {
-        return AiServices.builder(AiDemoService.class)
-                .chatLanguageModel(chatLanguageModel)
-                .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
-//                .tools(bookingTools)
-                .contentRetriever(contentRetriever)
-                .build();
     }
 
     @Bean
