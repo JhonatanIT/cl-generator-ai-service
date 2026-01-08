@@ -15,7 +15,7 @@
 	<description>Cover letter generator with AI</description>
 	<properties>
 		<java.version>21</java.version>
-		<jsoup.version>1.21.2</jsoup.version>
+		<jsoup.version>1.22.1</jsoup.version>
 		<htmlunit.version>2.70.0</htmlunit.version>
 		<langchain4j.version>1.10.0</langchain4j.version>
 		<pdfbox.version>3.0.6</pdfbox.version>
