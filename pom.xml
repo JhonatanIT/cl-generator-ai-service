@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>com.amazonaws.serverless</groupId>
 			<artifactId>aws-serverless-java-container-core</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.1</version>
 			<classifier>tests</classifier>
 			<type>test-jar</type>
 			<scope>test</scope>
